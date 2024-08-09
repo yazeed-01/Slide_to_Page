@@ -1,6 +1,6 @@
 # PPTX to Word Converter
 
-This Python tool converts PowerPoint (.pptx) files into Word (.docx) files with well-formatted titles and descriptions. It's perfect for college students and other people who need to manage and annotate slide content. You can convert slides to pages, make edits, add colors, highlight text.
+This Python tool converts PowerPoint (.pptx) files into Word (.docx) files with well-formatted titles and descriptions (the actual text) so you can update and delete everything. It's perfect for college students and other people who need to manage and annotate slide content. You can convert slides to pages, make edits, add colors, highlight text.
 
 ## Features
 
