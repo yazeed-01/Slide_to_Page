@@ -5,6 +5,12 @@ from docx import Document
 from docx.enum.text import WD_COLOR_INDEX
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
+import re
+
+# Function to clean text and remove non-XML-compatible characters
+def clean_text(text):
+    # Remove control characters and NULL bytes using regular expressions
+    return re.sub(r'[\x00-\x1F\x7F]', '', text)
 
 def add_horizontal_line(doc):
     p = doc.add_paragraph()
@@ -37,7 +43,7 @@ def convert_ppt_to_word(ppt_file, word_file):
                 continue
             
             if shape == slide.shapes.title:
-                title = shape.text_frame.text.strip()
+                title = clean_text(shape.text_frame.text.strip())
                 if title:
                     p = doc.add_paragraph()
                     run = p.add_run("Title: " + title)
@@ -45,7 +51,7 @@ def convert_ppt_to_word(ppt_file, word_file):
                     run.font.highlight_color = WD_COLOR_INDEX.TURQUOISE
             else:
                 for idx, paragraph in enumerate(shape.text_frame.paragraphs, start=1):
-                    content = paragraph.text.strip()
+                    content = clean_text(paragraph.text.strip())
                     if content:
                         p = doc.add_paragraph()
                         run = p.add_run(f"{idx}. {content}")
@@ -65,11 +71,9 @@ def select_file():
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
 
-# Create the main window
 root = tk.Tk()
 root.title("PPT to Word Converter")
-root.geometry("400x200")  # Width x Height in pixels
-
+root.geometry("400x200") 
 
 select_button = tk.Button(root, text="Select PowerPoint File", command=select_file)
 select_button.pack(pady=20)
